@@ -8662,7 +8662,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2025-05-21 08:32:40 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/admin/netbios/netbios_spoof.rb",
     "is_install_path": true,
     "ref_name": "admin/netbios/netbios_spoof",
@@ -8990,7 +8990,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2026-03-26 15:08:29 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/admin/networking/cisco_sdwan_auth_bypass.rb",
     "is_install_path": true,
     "ref_name": "admin/networking/cisco_sdwan_auth_bypass",
@@ -9035,7 +9035,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2026-05-15 09:43:25 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/admin/networking/cisco_sdwan_vhub_auth_bypass.rb",
     "is_install_path": true,
     "ref_name": "admin/networking/cisco_sdwan_vhub_auth_bypass",
@@ -16370,7 +16370,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2025-05-15 08:43:24 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/dos/rpc/rpcbomb.rb",
     "is_install_path": true,
     "ref_name": "dos/rpc/rpcbomb",
@@ -58309,7 +58309,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2025-05-28 01:19:53 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/scanner/snmp/snmp_enum_hp_laserjet.rb",
     "is_install_path": true,
     "ref_name": "scanner/snmp/snmp_enum_hp_laserjet",
@@ -62824,7 +62824,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2026-06-17 11:11:50 +0000",
+    "mod_time": "2026-06-30 14:15:16 +0000",
     "path": "/modules/auxiliary/server/netbios_spoof_nat.rb",
     "is_install_path": true,
     "ref_name": "server/netbios_spoof_nat",
@@ -99040,6 +99040,59 @@
     "session_types": false,
     "needs_cleanup": null
   },
+  "exploit_linux/persistence/apache_htaccess": {
+    "name": "Apache .htaccess Persistence",
+    "fullname": "exploit/linux/persistence/apache_htaccess",
+    "aliases": [],
+    "rank": 600,
+    "disclosure_date": "1995-12-01",
+    "type": "exploit",
+    "author": [
+      "wireghoul",
+      "msutovsky-r7",
+      "4ravind-b"
+    ],
+    "description": "This module writes a persistence payload into an Apache\n          .htaccess file using mod_cgi. The .htaccess file itself\n          acts as a CGI shell, executing commands passed via the\n          query string. Inspired by the htshells project by wireghoul.",
+    "references": [
+      "URL-https://github.com/wireghoul/htshells",
+      "ATT&CK-T1546"
+    ],
+    "platform": "Linux,PHP",
+    "arch": "php, cmd",
+    "rport": null,
+    "autofilter_ports": [],
+    "autofilter_services": [],
+    "targets": [
+      "PHP",
+      "Linux command"
+    ],
+    "mod_time": "2026-07-03 08:16:38 +0000",
+    "path": "/modules/exploits/linux/persistence/apache_htaccess.rb",
+    "is_install_path": true,
+    "ref_name": "linux/persistence/apache_htaccess",
+    "check": true,
+    "post_auth": false,
+    "default_credential": false,
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "Reliability": [
+        "repeatable-session",
+        "event-dependent"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk",
+        "config-changes"
+      ]
+    },
+    "session_types": [
+      "meterpreter",
+      "shell"
+    ],
+    "needs_cleanup": null,
+    "actions": []
+  },
   "exploit_linux/persistence/apt_package_manager": {
     "name": "APT Package Manager Persistence",
     "fullname": "exploit/linux/persistence/apt_package_manager",
@@ -110358,6 +110411,65 @@
       ],
       "SideEffects": [
         "unknown-side-effects"
+      ]
+    },
+    "session_types": false,
+    "needs_cleanup": null
+  },
+  "exploit_multi/http/flowise_auth_rce_cve_2026_41264": {
+    "name": "Flowise CSV Agent Prompt Injection RCE",
+    "fullname": "exploit/multi/http/flowise_auth_rce_cve_2026_41264",
+    "aliases": [],
+    "rank": 600,
+    "disclosure_date": "2026-04-22",
+    "type": "exploit",
+    "author": [
+      "zdi-disclosures",
+      "Takahiro Yokoyama"
+    ],
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on affected installations of FlowiseAI Flowise.\n          Authentication is not required to exploit this vulnerability.\n\n          The specific flaw exists within the run method of the CSV_Agents class.\n          The issue results from the lack of proper sandboxing when evaluating an LLM generated python script.\n          An attacker can leverage this vulnerability to execute code in the context of the user running the server.",
+    "references": [
+      "CVE-2026-41264",
+      "GHSA-3hjv-c53m-58jj"
+    ],
+    "platform": "Linux,Unix,Windows",
+    "arch": "cmd",
+    "rport": 3000,
+    "autofilter_ports": [
+      80,
+      8080,
+      443,
+      8000,
+      8888,
+      8880,
+      8008,
+      3000,
+      8443
+    ],
+    "autofilter_services": [
+      "http",
+      "https"
+    ],
+    "targets": [
+      "Linux Command",
+      "Windows Command"
+    ],
+    "mod_time": "2026-06-06 12:25:07 +0000",
+    "path": "/modules/exploits/multi/http/flowise_auth_rce_cve_2026_41264.rb",
+    "is_install_path": true,
+    "ref_name": "multi/http/flowise_auth_rce_cve_2026_41264",
+    "check": true,
+    "post_auth": false,
+    "default_credential": false,
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "Reliability": [
+        "repeatable-session"
+      ],
+      "SideEffects": [
+        "ioc-in-logs"
       ]
     },
     "session_types": false,
@@ -274178,6 +274290,41 @@
     "path": "/modules/payloads/singles/linux/loongarch64/chmod.rb",
     "is_install_path": true,
     "ref_name": "linux/loongarch64/chmod",
+    "check": false,
+    "post_auth": false,
+    "default_credential": false,
+    "notes": {},
+    "session_types": false,
+    "needs_cleanup": false,
+    "payload_type": 1,
+    "staged": false
+  },
+  "payload_linux/loongarch64/exec": {
+    "name": "Linux Execute Command",
+    "fullname": "payload/linux/loongarch64/exec",
+    "aliases": [],
+    "rank": 300,
+    "disclosure_date": null,
+    "type": "payload",
+    "author": [
+      "modexp",
+      "bcoles <bcoles@gmail.com>"
+    ],
+    "description": "Execute an arbitrary command.",
+    "references": [
+      "URL-https://modexp.wordpress.com/2022/05/02/shellcode-risc-v-linux/",
+      "URL-https://github.com/bcoles/shellcode/blob/main/loongarch64/cmd/cmd.s"
+    ],
+    "platform": "Linux",
+    "arch": "loongarch64",
+    "rport": null,
+    "autofilter_ports": null,
+    "autofilter_services": null,
+    "targets": null,
+    "mod_time": "2026-06-29 16:52:24 +0000",
+    "path": "/modules/payloads/singles/linux/loongarch64/exec.rb",
+    "is_install_path": true,
+    "ref_name": "linux/loongarch64/exec",
     "check": false,
     "post_auth": false,
     "default_credential": false,
